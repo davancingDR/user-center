@@ -1,4 +1,4 @@
-package com.rqh.user.model.domain;
+package com.rqh.user.model.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -15,8 +15,9 @@ import lombok.Data;
 @TableName(value ="user")
 @Data
 public class User implements Serializable {
+
     /**
-     * 
+     * 用户id
      */
     @TableId(type = IdType.AUTO)
     private Long userId;
@@ -40,6 +41,7 @@ public class User implements Serializable {
      * 用户头像
      */
     private String avatar;
+
     /**
      * 性别 0-女 1-男 2-保密
      */

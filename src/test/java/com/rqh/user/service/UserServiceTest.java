@@ -1,6 +1,6 @@
 package com.rqh.user.service;
 
-import com.rqh.user.model.domain.User;
+import com.rqh.user.model.domain.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

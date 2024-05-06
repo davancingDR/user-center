@@ -1,6 +1,7 @@
 package com.rqh.user.service;
 
-import com.rqh.user.model.domain.User;
+import com.rqh.user.model.domain.dto.UserRegisterDTO;
+import com.rqh.user.model.domain.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -12,11 +13,9 @@ public interface UserService extends IService<User> {
 
     /**
      * 用户注册
-     * @param account 用户账号
-     * @param password 用户密码
-     * @param checkPassword 校验密码
+     *
+     * @param userRegisterDTO 注册入参
      * @return 用户id
      */
-    // todo 封装入参
-    long userRegister(String account, String password, String checkPassword);
+    long userRegister(UserRegisterDTO userRegisterDTO);
 }

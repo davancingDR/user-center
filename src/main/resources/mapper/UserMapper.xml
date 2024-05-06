@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rqh.user.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="com.rqh.user.model.domain.User">
+    <resultMap id="BaseResultMap" type="com.rqh.user.model.domain.entity.User">
             <id property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="userName" column="user_name" jdbcType="VARCHAR"/>
             <result property="account" column="account" jdbcType="VARCHAR"/>
