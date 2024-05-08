@@ -3,7 +3,7 @@ package com.rqh.user.model.result;
 import java.text.MessageFormat;
 
 /**
- * 返回的错误码
+ * 标准的返回的错误码
  */
 public interface ResultCodeEnum {
 

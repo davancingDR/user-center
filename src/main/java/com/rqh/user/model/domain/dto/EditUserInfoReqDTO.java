@@ -3,7 +3,7 @@ package com.rqh.user.model.domain.dto;
 import lombok.Data;
 
 @Data
-public class EditUserReqDTO {
+public class EditUserInfoReqDTO {
     /**
      * 用户名/昵称
      */

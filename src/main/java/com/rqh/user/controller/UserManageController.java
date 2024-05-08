@@ -1,6 +1,7 @@
 package com.rqh.user.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rqh.user.model.domain.dto.UserQueryReqDTO;
 import com.rqh.user.model.domain.dto.UserRegisterDTO;
 import com.rqh.user.model.domain.vo.UserInfoVO;
 import com.rqh.user.model.result.BizResponse;
@@ -24,6 +25,13 @@ public class UserManageController {
 
     // 实现用户的增删改查，可以查看用户列表，批量修改用户账号状态（封禁）
 
+    @ApiOperation("分页查询用户列表")
+    @PostMapping(value = "/page")
+    public BizResponse<Page<UserInfoVO>> queryUserInfoPage(@RequestBody UserQueryReqDTO queryReqDTO) {
+        Page<UserInfoVO> userInfoPage = userService.queryUserInfoPage(queryReqDTO);
+        return BizResponse.success(userInfoPage);
+    }
+
     @ApiOperation("添加用户")
     @PostMapping(value = "/add")
     public BizResponse<Long> addUser(UserRegisterDTO userRegisterDTO) {
@@ -42,12 +50,6 @@ public class UserManageController {
     public BizResponse<Boolean> updateStatus(List<Long> userIds, Integer status) {
         // 1.校验权限
         // 2.编辑账号状态
-        return BizResponse.success();
-    }
-
-    @ApiOperation("分页查询用户列表")
-    @GetMapping(value = "/page")
-    public BizResponse<Page<UserInfoVO>> getUserList() {
         return BizResponse.success();
     }
 }

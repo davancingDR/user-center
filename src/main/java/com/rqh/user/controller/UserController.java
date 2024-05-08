@@ -1,8 +1,10 @@
 package com.rqh.user.controller;
 
 import com.rqh.user.model.domain.dto.EditPasswordReqDTO;
-import com.rqh.user.model.domain.dto.EditUserReqDTO;
+import com.rqh.user.model.domain.dto.EditUserInfoReqDTO;
+import com.rqh.user.model.domain.dto.UserLoginDTO;
 import com.rqh.user.model.domain.dto.UserRegisterDTO;
+import com.rqh.user.model.domain.vo.UserInfoVO;
 import com.rqh.user.model.result.BizResponse;
 import com.rqh.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -26,12 +28,24 @@ public class UserController {
     @ApiOperation("用户注册")
     @PostMapping("/register")
     public BizResponse<Long> userRegister(UserRegisterDTO userRegisterDTO) {
+        return BizResponse.success(userService.userRegister(userRegisterDTO));
+    }
+
+    @ApiOperation("用户登录")
+    @PostMapping("/login")
+    public BizResponse<Boolean> userLogin(UserLoginDTO loginDTO) {
+        return BizResponse.success();
+    }
+
+    @ApiOperation("查看用户个人信息")
+    @PostMapping(value = "/detail")
+    public BizResponse<UserInfoVO> getUserInfo(Long userId) {
         return BizResponse.success();
     }
 
     @ApiOperation("修改用户个人信息")
-    @PostMapping(value = "/edit")
-    public BizResponse updateUser(EditUserReqDTO editDTO) {
+    @PostMapping(value = "/edit/info")
+    public BizResponse<Boolean> updateUser(EditUserInfoReqDTO editDTO) {
         return BizResponse.success();
     }
 
@@ -46,7 +60,7 @@ public class UserController {
 
     @ApiOperation("注销账户")
     @PostMapping(value = "/logout")
-    public BizResponse<Boolean> updatePassword(Long userId) {
+    public BizResponse<Boolean> logout(Long userId) {
         return BizResponse.success();
     }
 }

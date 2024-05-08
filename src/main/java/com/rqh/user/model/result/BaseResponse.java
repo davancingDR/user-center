@@ -1,6 +1,5 @@
 package com.rqh.user.model.result;
 
-import com.rqh.user.model.enums.ResponseCodeEnum;
 import lombok.Getter;
 
 import java.io.Serializable;

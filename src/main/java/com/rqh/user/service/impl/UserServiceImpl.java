@@ -1,14 +1,23 @@
 package com.rqh.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.rqh.user.exception.UserException;
+import com.rqh.user.manager.UserManager;
+import com.rqh.user.model.domain.dto.UserQueryReqDTO;
 import com.rqh.user.model.domain.dto.UserRegisterDTO;
 import com.rqh.user.model.domain.entity.User;
 import com.rqh.user.mapper.UserMapper;
+import com.rqh.user.model.domain.vo.UserInfoVO;
+import com.rqh.user.model.enums.UserExceptionEnum;
 import com.rqh.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,19 +30,22 @@ import java.util.regex.Pattern;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService {
 
+    @Resource
+    private UserManager userManager;
+
     @Override
     public long userRegister(UserRegisterDTO userRegisterDTO) {
         // 1. 数据格式校验
         // 非空校验
         if (StringUtils.isAnyBlank(userRegisterDTO.getAccount(),
                 userRegisterDTO.getPassword(), userRegisterDTO.getCheckPassword())) {
-            return -1;
+            throw new UserException(UserExceptionEnum.PARAMETER_IS_NULL);
         }
         if (userRegisterDTO.getAccount().length() < 4) {
-            return -1;
+            throw new UserException(UserExceptionEnum.PARAMETER_ERROR, "账号长度不能小于4");
         }
         if (userRegisterDTO.getPassword().length() < 8 || userRegisterDTO.getCheckPassword().length() < 8) {
-            return -1;
+            throw new UserException(UserExceptionEnum.PARAMETER_ERROR, "密码长度不能小于8");
         }
         // 账号不能含有特殊字符
         String validPattern = "\\pP|\\pS|\\s+";
@@ -42,23 +54,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // P 表示 Unicode 字符集属性：标点字符，S 是符号（数学符号，货币符号等）
         Matcher matcher = Pattern.compile(validPattern).matcher(userRegisterDTO.getAccount());
         if (!matcher.find()) {
-            return -1;
+            throw new UserException(UserExceptionEnum.PARAMETER_ERROR, "账号不能包含特殊字符");
         }
         //  密码和校验密码相同
         if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getCheckPassword())) {
-            return -1;
+            throw new UserException(UserExceptionEnum.PARAMETER_ERROR, "两次输入的密码不一致");
         }
         // 账号不能重复
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account", userRegisterDTO.getAccount());
         long count = this.count(queryWrapper);
         if (count > 0) {
-            return -1;
+            throw new UserException(UserExceptionEnum.ACCOUNT_EXIST);
         }
 
         // 2. 加密
-
         return 0;
+    }
+
+    @Override
+    public Page<UserInfoVO> queryUserInfoPage(UserQueryReqDTO queryDTO) {
+
+        Page<UserInfoVO> userInfoPage = new Page<>();
+        List<User> userList = userManager.queryUserInfoPage(queryDTO);
+        List<UserInfoVO> userVoList =
+        userInfoPage.setRecords(userList);
+        return null;
     }
 }
 

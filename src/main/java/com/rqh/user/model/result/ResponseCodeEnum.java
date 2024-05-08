@@ -1,6 +1,5 @@
-package com.rqh.user.model.enums;
+package com.rqh.user.model.result;
 
-import com.rqh.user.model.result.ResultCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

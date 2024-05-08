@@ -11,3 +11,7 @@ spring:
 
 server:
   port: 10086
+
+knife4j:
+  enable: true
+# http://localhost:10086/doc.html
