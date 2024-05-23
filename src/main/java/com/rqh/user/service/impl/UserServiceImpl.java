@@ -5,19 +5,19 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rqh.user.exception.UserException;
 import com.rqh.user.manager.UserManager;
+import com.rqh.user.mapper.UserMapper;
 import com.rqh.user.model.domain.dto.UserQueryReqDTO;
 import com.rqh.user.model.domain.dto.UserRegisterDTO;
 import com.rqh.user.model.domain.entity.User;
-import com.rqh.user.mapper.UserMapper;
 import com.rqh.user.model.domain.vo.UserInfoVO;
 import com.rqh.user.model.enums.UserExceptionEnum;
 import com.rqh.user.service.UserService;
+import com.rqh.user.utils.CopyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,9 +77,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         Page<UserInfoVO> userInfoPage = new Page<>();
         List<User> userList = userManager.queryUserInfoPage(queryDTO);
-        List<UserInfoVO> userVoList =
-        userInfoPage.setRecords(userList);
-        return null;
+        List<UserInfoVO> userVoList = CopyUtils.copyList(userList, UserInfoVO.class);
+        userInfoPage.setRecords(userVoList);
+        return userInfoPage;
     }
 }
 
