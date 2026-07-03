@@ -6,10 +6,12 @@ import com.rqh.user.mapper.UserMapper;
 import com.rqh.user.model.domain.dto.UserQueryReqDTO;
 import com.rqh.user.model.domain.entity.User;
 import com.rqh.user.model.domain.vo.UserInfoVO;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+@Component
 public class UserManagerImpl implements UserManager {
 
     @Resource

@@ -53,7 +53,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // \pP p 是 property 的意思，表示 Unicode 属性，用于 Unicode 正则表达式的前缀
         // P 表示 Unicode 字符集属性：标点字符，S 是符号（数学符号，货币符号等）
         Matcher matcher = Pattern.compile(validPattern).matcher(userRegisterDTO.getAccount());
-        if (!matcher.find()) {
+        if (matcher.find()) {
             throw new UserException(UserExceptionEnum.PARAMETER_ERROR, "账号不能包含特殊字符");
         }
         //  密码和校验密码相同
