@@ -63,9 +63,9 @@ public class User implements Serializable {
     private Integer userRole;
 
     /**
-     * 账号状态 0-禁用 1-正常
+     * 账号状态 0-禁用 1-正常 2-受限
      */
-    private Integer status;
+    private Integer accountStatus;
 
     /**
      * 删除标识 0-未删除 1-已删除

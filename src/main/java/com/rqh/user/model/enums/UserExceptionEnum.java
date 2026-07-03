@@ -5,11 +5,12 @@ public enum UserExceptionEnum implements ExceptionCodeEnum<UserExceptionEnum>, R
     // 参数异常
     PARAMETER_ERROR("10000001", "数据格式错误"),
     PARAMETER_IS_NULL("10000002", "参数不能为空"),
+    SYSTEM_ERROR("10000003", "系统繁忙，请稍后重试"),
 
     // 用户异常
-    LOGIN_NAME_BLANK("10000001", "登录名不能为空"),
-    ACCOUNT_EXIST("10000004", "账号已存在"),
-    USER_NOT_EXIST("10000002", "用户不存在"),
+    LOGIN_NAME_BLANK("10000100", "登录名不能为空"),
+    ACCOUNT_EXIST("10000101", "账号已存在"),
+    USER_NOT_EXIST("10000102", "用户不存在"),
     ;
 
     private String code, msg;

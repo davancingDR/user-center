@@ -10,10 +10,13 @@ import com.rqh.user.model.domain.dto.UserQueryReqDTO;
 import com.rqh.user.model.domain.dto.UserRegisterDTO;
 import com.rqh.user.model.domain.entity.User;
 import com.rqh.user.model.domain.vo.UserInfoVO;
+import com.rqh.user.model.enums.AccountStatusEnum;
 import com.rqh.user.model.enums.UserExceptionEnum;
+import com.rqh.user.model.enums.UserRoleEnum;
 import com.rqh.user.service.UserService;
 import com.rqh.user.utils.CopyUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
@@ -27,8 +30,10 @@ import java.util.regex.Pattern;
 * @createDate 2024-05-03 23:25:50
 */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-    implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     @Resource
     private UserManager userManager;
@@ -68,8 +73,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             throw new UserException(UserExceptionEnum.ACCOUNT_EXIST);
         }
 
-        // 2. 加密
-        return 0;
+        // 2. 加密：BCrypt 自带随机盐，直接调用 encode 方法，不用自己拼盐
+        String encryptPassword = passwordEncoder.encode(userRegisterDTO.getPassword());
+
+        // 3. 组装实体并落库
+        User user = new User();
+        user.setUserName(userRegisterDTO.getUserName());
+        user.setAccount(userRegisterDTO.getAccount());
+        user.setPassword(encryptPassword);
+        user.setUserRole(UserRoleEnum.COMMON.getCode());                // 默认普通用户
+        user.setAccountStatus(AccountStatusEnum.NORMAL.getCode());      // 默认账号正常
+
+        boolean saved = this.save(user);
+        if (!saved) {
+            throw new UserException(UserExceptionEnum.SYSTEM_ERROR);
+        }
+
+        return user.getUserId();
     }
 
     @Override
