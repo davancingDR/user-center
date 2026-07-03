@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rqh.user.model.domain.dto.UserQueryReqDTO;
 import com.rqh.user.model.domain.dto.UserRegisterDTO;
 import com.rqh.user.model.domain.vo.UserInfoVO;
-import com.rqh.user.model.result.BizResponse;
+import com.rqh.user.base.BizResponse;
 import com.rqh.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

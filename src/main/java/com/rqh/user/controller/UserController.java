@@ -5,7 +5,7 @@ import com.rqh.user.model.domain.dto.EditUserInfoReqDTO;
 import com.rqh.user.model.domain.dto.UserLoginDTO;
 import com.rqh.user.model.domain.dto.UserRegisterDTO;
 import com.rqh.user.model.domain.vo.UserInfoVO;
-import com.rqh.user.model.result.BizResponse;
+import com.rqh.user.base.BizResponse;
 import com.rqh.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

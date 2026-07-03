@@ -1,5 +1,6 @@
-package com.rqh.user.model.result;
+package com.rqh.user.base;
 
+import com.rqh.user.model.enums.ResponseCodeEnum;
 import lombok.Data;
 
 @Data

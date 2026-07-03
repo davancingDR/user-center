@@ -1,7 +1,7 @@
 package com.rqh.user.exception;
 
 import com.rqh.user.model.enums.ExceptionCodeEnum;
-import com.rqh.user.model.result.ResultCodeEnum;
+import com.rqh.user.model.enums.ResultCodeEnum;
 
 public class UserException extends BizException {
     public UserException(ExceptionCodeEnum codeEnum) {

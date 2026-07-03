@@ -1,6 +1,6 @@
 package com.rqh.user.exception;
 
-import com.rqh.user.model.result.ResultCodeEnum;
+import com.rqh.user.model.enums.ResultCodeEnum;
 import org.apache.commons.lang3.exception.ContextedRuntimeException;
 
 import java.text.MessageFormat;

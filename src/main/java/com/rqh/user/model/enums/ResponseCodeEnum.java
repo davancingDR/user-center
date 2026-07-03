@@ -1,4 +1,4 @@
-package com.rqh.user.model.result;
+package com.rqh.user.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

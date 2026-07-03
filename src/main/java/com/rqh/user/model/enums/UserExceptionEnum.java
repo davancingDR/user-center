@@ -1,7 +1,5 @@
 package com.rqh.user.model.enums;
 
-import com.rqh.user.model.result.ResultCodeEnum;
-
 public enum UserExceptionEnum implements ExceptionCodeEnum<UserExceptionEnum>, ResultCodeEnum {
 
     // 参数异常
