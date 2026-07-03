@@ -1,7 +1,7 @@
 package com.rqh.user.utils;
 
 import com.rqh.user.utils.dic.DicTranslateUtil;
-import org.apache.commons.collections.CollectionUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.core.Converter;
 

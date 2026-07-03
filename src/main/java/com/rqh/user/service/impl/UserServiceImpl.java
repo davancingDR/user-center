@@ -16,7 +16,7 @@ import com.rqh.user.utils.CopyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

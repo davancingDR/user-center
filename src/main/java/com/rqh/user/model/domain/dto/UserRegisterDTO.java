@@ -2,7 +2,7 @@ package com.rqh.user.model.domain.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * 用户注册请求参数

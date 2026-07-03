@@ -1,13 +1,14 @@
 package com.rqh.user.base;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.validation.constraints.Min;
+import jakarta.validation.constraints.Min;
 import java.io.Serializable;
 
+@ToString
 public class BaseQueryPage implements Serializable {
 
     private static final long serialVersionUID = -2159963963668504703L;
@@ -37,10 +38,5 @@ public class BaseQueryPage implements Serializable {
 
     public void setStartIndex(){
         this.startIndex = (getPageNum() - 1) * getPageSize();
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
     }
 }

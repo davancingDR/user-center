@@ -8,7 +8,7 @@ import com.rqh.user.model.domain.entity.User;
 import com.rqh.user.model.domain.vo.UserInfoVO;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 @Component

@@ -12,6 +12,10 @@ spring:
 server:
   port: 10086
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs        # OpenAPI JSON 地址
+  swagger-ui:
+    path: /swagger-ui.html    # 原生 swagger-ui
 knife4j:
-  enable: true
-# http://localhost:10086/doc.html
+  enable: true                # knife4j 增强 UI：访问 http://localhost:10086/doc.html

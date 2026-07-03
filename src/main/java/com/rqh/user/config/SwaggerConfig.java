@@ -1,40 +1,40 @@
 package com.rqh.user.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
+
 
 /**
- * Swagger API 文档相关配置
+ * API 文档配置
  */
 @Configuration
-@EnableKnife4j
 public class SwaggerConfig {
 
+    /**
+     * 文档基本信息
+     */
     @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .useDefaultResponseMessages(false)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.rqh.user.controller"))
-                .paths(PathSelectors.any())
-                .build();
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
+    public OpenAPI userCenterOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
                 .title("用户中心API文档")
-                .contact("rqh")
                 .description("用户中心API文档")
                 .version("v1.0.0")
+                .contact(new Contact().name("rqh")));
+    }
+
+    /**
+     * 分组扫描
+     */
+    @Bean
+    public GroupedOpenApi userApi() {
+        return GroupedOpenApi.builder()
+                .group("用户中心")
+                .packagesToScan("com.rqh.user.controller")
                 .build();
     }
 }
