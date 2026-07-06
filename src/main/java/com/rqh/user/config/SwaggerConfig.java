@@ -34,7 +34,7 @@ public class SwaggerConfig {
     public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
                 .group("用户中心")
-                .packagesToScan("com.rqh.user.controller")
+                .packagesToScan("com.rqh.user.modules.user.controller")
                 .build();
     }
 }

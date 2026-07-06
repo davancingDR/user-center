@@ -17,5 +17,7 @@ springdoc:
     path: /v3/api-docs        # OpenAPI JSON 地址
   swagger-ui:
     path: /swagger-ui.html    # 原生 swagger-ui
+
+# knife4j 4.5.0 版本和 SpringBoot 3.5.3 版本不兼容，enable设为 false 才可正常使用，否则会出现报错
 knife4j:
-  enable: true                # knife4j 增强 UI：访问 http://localhost:10086/doc.html
+  enable: false                # knife4j 增强 UI：访问 http://localhost:10086/doc.html

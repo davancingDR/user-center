@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rqh.user.mapper.UserMapper">
+<mapper namespace="com.rqh.user.modules.user.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="com.rqh.user.model.domain.entity.User">
+    <resultMap id="BaseResultMap" type="com.rqh.user.modules.user.model.entity.User">
             <id property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="userName" column="user_name" jdbcType="VARCHAR"/>
             <result property="account" column="account" jdbcType="VARCHAR"/>

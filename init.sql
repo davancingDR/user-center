@@ -9,7 +9,7 @@ CREATE TABLE USER (
     phone VARCHAR ( 11 ) DEFAULT NULL COMMENT '联系方式(手机号)',
     email VARCHAR ( 128 ) DEFAULT NULL COMMENT '邮箱地址',
     user_role TINYINT NOT NULL DEFAULT '1' COMMENT '用户角色 0-管理员 1-普通用户 2-vip',
-    status TINYINT NOT NULL DEFAULT '1' COMMENT '账号状态 0-禁用 1-正常',
+    account_status TINYINT NOT NULL DEFAULT '1' COMMENT '账号状态 0-禁用 1-正常',
     deleted TINYINT NOT NULL DEFAULT '0' COMMENT '删除标识 0-未删除 1-已删除',
     create_time datetime DEFAULT CURRENT_TIMESTAMP NULL COMMENT '创建时间',
     update_time datetime DEFAULT CURRENT_TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
