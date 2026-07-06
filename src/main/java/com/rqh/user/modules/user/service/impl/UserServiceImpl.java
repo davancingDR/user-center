@@ -41,25 +41,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public long userRegister(UserRegisterDTO userRegisterDTO) {
         // 1. 数据格式校验
-        if (userRegisterDTO.getAccount().length() < 4) {
-            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "账号长度不能小于4");
-        }
-        if (userRegisterDTO.getPassword().length() < 8 || userRegisterDTO.getCheckPassword().length() < 8) {
-            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "密码长度不能小于8");
-        }
-        // 账号不能含有特殊字符
-        String validPattern = "\\pP|\\pS|\\s+";
-        // \s+ 一个空格或多个，不管在哪个位置都能匹配
-        // \pP p 是 property 的意思，表示 Unicode 属性，用于 Unicode 正则表达式的前缀
-        // P 表示 Unicode 字符集属性：标点字符，S 是符号（数学符号，货币符号等）
-        Matcher matcher = Pattern.compile(validPattern).matcher(userRegisterDTO.getAccount());
-        if (matcher.find()) {
-            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "账号不能包含特殊字符");
-        }
-        //  密码和校验密码相同
-        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getCheckPassword())) {
-            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "两次输入的密码不一致");
-        }
+//        if (userRegisterDTO.getAccount().length() < 4) {
+//            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "账号长度不能小于4");
+//        }
+//        if (userRegisterDTO.getPassword().length() < 8 || userRegisterDTO.getCheckPassword().length() < 8) {
+//            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "密码长度不能小于8");
+//        }
+//        // 账号不能含有特殊字符
+//        String validPattern = "\\pP|\\pS|\\s+";
+//        // \s+ 一个空格或多个，不管在哪个位置都能匹配
+//        // \pP p 是 property 的意思，表示 Unicode 属性，用于 Unicode 正则表达式的前缀
+//        // P 表示 Unicode 字符集属性：标点字符，S 是符号（数学符号，货币符号等）
+//        Matcher matcher = Pattern.compile(validPattern).matcher(userRegisterDTO.getAccount());
+//        if (matcher.find()) {
+//            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "账号不能包含特殊字符");
+//        }
+//        //  密码和校验密码相同
+//        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getCheckPassword())) {
+//            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "两次输入的密码不一致");
+//        }
         // 账号不能重复
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account", userRegisterDTO.getAccount());

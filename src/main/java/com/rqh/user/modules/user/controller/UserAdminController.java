@@ -35,7 +35,7 @@ public class UserAdminController {
 
     @Operation(summary = "添加用户")
     @PostMapping(value = "/add")
-    public Result<Long> addUser(@Valid UserRegisterDTO userRegisterDTO) {
+    public Result<Long> addUser(@RequestBody @Valid UserRegisterDTO userRegisterDTO) {
         return Result.success(userService.userRegister(userRegisterDTO));
     }
 

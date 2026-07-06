@@ -18,7 +18,7 @@ public class UserRegisterDTO {
 
     @NotBlank(message = "账号不能为空")
     @Size(min = 4, message = "账号长度不能小于 4")
-    @Pattern(regexp = "^[^\\\\pP\\\\pS\\\\s]+$", message = "账号不能包含特殊字符")
+    @Pattern(regexp = "^[^\\pP\\pS\\s]+$", message = "账号不能包含特殊字符")
     private String account;
 
     @NotBlank(message = "密码不能为空")
