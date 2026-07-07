@@ -56,10 +56,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //        if (matcher.find()) {
 //            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "账号不能包含特殊字符");
 //        }
-//        //  密码和校验密码相同
-//        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getCheckPassword())) {
-//            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "两次输入的密码不一致");
-//        }
+        //  密码和校验密码相同
+        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getCheckPassword())) {
+            throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "两次输入的密码不一致");
+        }
         // 账号不能重复
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account", userRegisterDTO.getAccount());
