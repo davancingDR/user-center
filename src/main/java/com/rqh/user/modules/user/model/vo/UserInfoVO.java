@@ -39,11 +39,8 @@ public class UserInfoVO {
     @Schema(description = "用户角色 0-管理员 1-普通用户 2-VIP")
     private Integer userRole;
 
-    @Schema(description = "账号状态 0-禁用 1-正常")
-    private Integer status;
-
-    @Schema(description = "删除标识 0-未删除 1-已删除")
-    private Integer deleted;
+    @Schema(description = "账号状态 0-禁用 1-正常 2-受限")
+    private Integer accountStatus;
 
     @Schema(description = "创建时间")
     private Date createTime;

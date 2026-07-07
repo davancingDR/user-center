@@ -1,13 +1,14 @@
 package com.rqh.user.modules.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rqh.user.common.errorcode.CommonErrorCode;
 import com.rqh.user.common.exception.BusinessException;
+import com.rqh.user.common.util.CopyUtil;
 import com.rqh.user.modules.user.manager.UserManager;
 import com.rqh.user.modules.user.mapper.UserMapper;
-import com.rqh.user.modules.user.model.dto.UserQueryReqDTO;
+import com.rqh.user.modules.user.model.dto.UserLoginDTO;
 import com.rqh.user.modules.user.model.dto.UserRegisterDTO;
 import com.rqh.user.modules.user.model.entity.User;
 import com.rqh.user.modules.user.model.vo.UserInfoVO;
@@ -15,14 +16,12 @@ import com.rqh.user.modules.user.enums.AccountStatusEnum;
 import com.rqh.user.modules.user.errorcode.UserErrorCode;
 import com.rqh.user.modules.user.enums.UserRoleEnum;
 import com.rqh.user.modules.user.service.UserService;
-import com.rqh.user.common.util.CopyUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import java.util.Objects;
 
 /**
 * @author L.Snow
@@ -61,8 +60,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(CommonErrorCode.PARAMETER_ERROR, "两次输入的密码不一致");
         }
         // 账号不能重复
-        QueryWrapper queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("account", userRegisterDTO.getAccount());
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getAccount, userRegisterDTO.getAccount());
         long count = this.count(queryWrapper);
         if (count > 0) {
             throw new BusinessException(UserErrorCode.ACCOUNT_EXIST);
@@ -88,13 +87,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Page<UserInfoVO> queryUserInfoPage(UserQueryReqDTO queryDTO) {
-
-        Page<UserInfoVO> userInfoPage = new Page<>();
-        List<User> userList = userManager.queryUserInfoPage(queryDTO);
-        List<UserInfoVO> userVoList = CopyUtil.copyList(userList, UserInfoVO.class);
-        userInfoPage.setRecords(userVoList);
-        return userInfoPage;
+    public UserInfoVO userLogin(UserLoginDTO userLoginDTO) {
+        User user = userManager.queryUser(userLoginDTO.getAccount());
+        if (Objects.isNull(user)) {
+            throw new BusinessException(UserErrorCode.PASSWORD_WRONG);
+        }
+        if (!passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
+            throw new BusinessException(UserErrorCode.PASSWORD_WRONG);
+        }
+        if (AccountStatusEnum.BAN.getCode().equals(user.getAccountStatus())) {
+            throw new BusinessException(UserErrorCode.ACCOUNT_DISABLED);
+        }
+        return CopyUtil.copyObject(user, UserInfoVO.class);
     }
 }
 

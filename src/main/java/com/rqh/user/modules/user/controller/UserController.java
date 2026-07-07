@@ -1,5 +1,7 @@
 package com.rqh.user.modules.user.controller;
 
+import com.rqh.user.common.errorcode.CommonErrorCode;
+import com.rqh.user.common.exception.BusinessException;
 import com.rqh.user.common.response.Result;
 import com.rqh.user.modules.user.model.dto.EditPasswordReqDTO;
 import com.rqh.user.modules.user.model.dto.EditUserInfoReqDTO;
@@ -9,6 +11,7 @@ import com.rqh.user.modules.user.model.vo.UserInfoVO;
 import com.rqh.user.modules.user.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,11 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 
+import java.util.Objects;
+
 @Tag(name = "用户接口")
 @Slf4j
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+
+    private static final String LOGIN_USER = "loginUser";
 
     @Resource
     private UserService userService;
@@ -35,14 +42,28 @@ public class UserController {
 
     @Operation(summary = "用户登录")
     @PostMapping("/login")
-    public Result<Boolean> userLogin(UserLoginDTO loginDTO) {
-        return Result.success();
+    public Result<UserInfoVO> userLogin(@RequestBody @Valid UserLoginDTO loginDTO,
+                                        HttpServletRequest request) {
+        UserInfoVO userInfo = userService.userLogin(loginDTO);
+        request.getSession().setAttribute(LOGIN_USER, userInfo);
+        return Result.success(userInfo);
     }
 
-    @Operation(summary = "查看用户个人信息")
+    @Operation(summary = "用户登出")
+    @PostMapping("/logout")
+    public Result<Boolean> userLogout(HttpServletRequest request) {
+        request.getSession().removeAttribute(LOGIN_USER);
+        return Result.success(true);
+    }
+
+    @Operation(summary = "获取当前登录用户信息")
     @PostMapping(value = "/detail")
-    public Result<UserInfoVO> getUserInfo(Long userId) {
-        return Result.success();
+    public Result<UserInfoVO> getUserInfo(HttpServletRequest request) {
+        UserInfoVO userInfo = (UserInfoVO) request.getSession().getAttribute(LOGIN_USER);
+        if (Objects.isNull(userInfo)) {
+            throw new BusinessException(CommonErrorCode.UNAUTHORIZED);
+        }
+        return Result.success(userInfo);
     }
 
     @Operation(summary = "修改用户个人信息")
@@ -61,7 +82,7 @@ public class UserController {
     }
 
     @Operation(summary = "注销账户")
-    @PostMapping(value = "/logout")
+    @PostMapping(value = "/cancel")
     public Result<Boolean> logout(Long userId) {
         return Result.success();
     }

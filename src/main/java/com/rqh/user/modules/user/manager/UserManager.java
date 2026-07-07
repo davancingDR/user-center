@@ -13,4 +13,12 @@ public interface UserManager {
      * @return 用户列表
      */
     List<User> queryUserInfoPage(UserQueryReqDTO queryDTO);
+
+    /**
+     * 根据账号查询用户信息
+     * @param account 用户账号
+     * @return 用户信息
+     */
+    User queryUser(String account);
+
 }

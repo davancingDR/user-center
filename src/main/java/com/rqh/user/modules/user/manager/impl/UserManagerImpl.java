@@ -1,6 +1,7 @@
 package com.rqh.user.modules.user.manager.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rqh.user.modules.user.manager.UserManager;
 import com.rqh.user.modules.user.mapper.UserMapper;
 import com.rqh.user.modules.user.model.dto.UserQueryReqDTO;
@@ -22,5 +23,12 @@ public class UserManagerImpl implements UserManager {
         LambdaQueryWrapper<UserInfoVO> queryWrapper = new LambdaQueryWrapper<>();
 
         return null;
+    }
+
+    @Override
+    public User queryUser(String account) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getAccount, account).eq(User::getDeleted, 0);
+        return userMapper.selectOne(queryWrapper);
     }
 }

@@ -1,7 +1,6 @@
 package com.rqh.user.modules.user.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rqh.user.modules.user.model.dto.UserQueryReqDTO;
+import com.rqh.user.modules.user.model.dto.UserLoginDTO;
 import com.rqh.user.modules.user.model.dto.UserRegisterDTO;
 import com.rqh.user.modules.user.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -23,10 +22,10 @@ public interface UserService extends IService<User> {
     long userRegister(UserRegisterDTO userRegisterDTO);
 
     /**
-     * 分页查询用户列表
+     * 用户登录
      *
-     * @param queryDTO 查询条件参数
-     * @return 用户信息分页
+     * @param userLoginDTO 登录参数
+     * @return 用户信息
      */
-    Page<UserInfoVO> queryUserInfoPage(UserQueryReqDTO queryDTO);
+    UserInfoVO userLogin(UserLoginDTO userLoginDTO);
 }
