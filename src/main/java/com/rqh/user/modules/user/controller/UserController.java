@@ -53,7 +53,7 @@ public class UserController {
     @PostMapping("/logout")
     public Result<Boolean> userLogout(HttpServletRequest request) {
         request.getSession().removeAttribute(LOGIN_USER);
-        return Result.success(true);
+        return Result.success(Boolean.TRUE);
     }
 
     @Operation(summary = "获取当前登录用户信息")
@@ -68,8 +68,15 @@ public class UserController {
 
     @Operation(summary = "修改用户个人信息")
     @PostMapping(value = "/edit/info")
-    public Result<Boolean> updateUser(EditUserInfoReqDTO editDTO) {
-        return Result.success();
+    public Result<UserInfoVO> updateUser(@RequestBody @Valid EditUserInfoReqDTO editDTO,
+                                      HttpServletRequest request) {
+        UserInfoVO loginUser = (UserInfoVO) request.getSession().getAttribute(LOGIN_USER);
+        if (Objects.isNull(loginUser)) {
+            throw new BusinessException(CommonErrorCode.UNAUTHORIZED);
+        }
+        UserInfoVO updatedUser = userService.editUserInfo(editDTO, loginUser.getUserId());
+        request.getSession().setAttribute(LOGIN_USER, updatedUser);
+        return Result.success(updatedUser);
     }
 
     @Operation(summary = "修改密码")

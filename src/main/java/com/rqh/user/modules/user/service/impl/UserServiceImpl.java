@@ -1,13 +1,13 @@
 package com.rqh.user.modules.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rqh.user.common.errorcode.CommonErrorCode;
 import com.rqh.user.common.exception.BusinessException;
 import com.rqh.user.common.util.CopyUtil;
 import com.rqh.user.modules.user.manager.UserManager;
 import com.rqh.user.modules.user.mapper.UserMapper;
+import com.rqh.user.modules.user.model.dto.EditUserInfoReqDTO;
 import com.rqh.user.modules.user.model.dto.UserLoginDTO;
 import com.rqh.user.modules.user.model.dto.UserRegisterDTO;
 import com.rqh.user.modules.user.model.entity.User;
@@ -99,6 +99,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(UserErrorCode.ACCOUNT_DISABLED);
         }
         return CopyUtil.copyObject(user, UserInfoVO.class);
+    }
+
+    @Override
+    public UserInfoVO editUserInfo(EditUserInfoReqDTO editDTO, Long userId) {
+        User user = new User();
+        user.setUserId(userId);
+        user.setUserName(editDTO.getUserName());
+        user.setAvatar(editDTO.getAvatar());
+        user.setEmail(editDTO.getEmail());
+        user.setGender(editDTO.getGender());
+        user.setPhone(editDTO.getPhone());
+        if (!this.updateById(user)) {
+            throw new BusinessException(UserErrorCode.USER_NOT_EXIST);
+        }
+        User updatedUser = this.getById(userId);
+        if (Objects.isNull(updatedUser)) {
+            throw new BusinessException(UserErrorCode.USER_NOT_EXIST);
+        }
+        return CopyUtil.copyObject(updatedUser, UserInfoVO.class);
     }
 }
 

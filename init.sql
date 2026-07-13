@@ -19,7 +19,7 @@ CREATE TABLE USER (
 ) ENGINE = INNODB DEFAULT charset = utf8 COMMENT = '用户信息表';
 
 -- 插入测试数据
-INSERT INTO USER (user_name, account, password, avatar, gender, phone, email, user_role, status, deleted, create_time, update_time) VALUES
+INSERT INTO USER (user_name, account, password, avatar, gender, phone, email, user_role, account_status, deleted, create_time, update_time) VALUES
 ('admin', 'admin', 'admin', '', 1, '12345678901', 'admin@example.com', 0, 1, 0, now(), now()),
 ('Alice', 'alice123', 'alice123', '', 1, '12345678901', 'alice@example.com', 1, 1, 0, '2024-05-01 10:00:00', '2024-05-01 10:00:00'),
 ('Bob', 'bob123', 'bob123', '', 0, '98765432109', 'bob@example.com', 1, 1, 0, '2024-06-01 11:00:00', '2024-06-01 11:00:00'),

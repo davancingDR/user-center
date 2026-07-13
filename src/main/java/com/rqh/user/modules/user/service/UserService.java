@@ -1,5 +1,6 @@
 package com.rqh.user.modules.user.service;
 
+import com.rqh.user.modules.user.model.dto.EditUserInfoReqDTO;
 import com.rqh.user.modules.user.model.dto.UserLoginDTO;
 import com.rqh.user.modules.user.model.dto.UserRegisterDTO;
 import com.rqh.user.modules.user.model.entity.User;
@@ -28,4 +29,11 @@ public interface UserService extends IService<User> {
      * @return 用户信息
      */
     UserInfoVO userLogin(UserLoginDTO userLoginDTO);
+
+    /**
+     * 修改用户信息
+     * @param editDTO 允许用户修改的入参
+     * @return 用户信息
+     */
+    UserInfoVO editUserInfo(EditUserInfoReqDTO editDTO, Long userId);
 }
